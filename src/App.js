@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-
+import './index.css';
+import Header from './Header';
+import Footer from './Footer';
+import ContactCard from './ContactCard';
+import { useState } from 'react';
 function App() {
+  const [contacts, setContact] = useState([
+    {imgSource: require('./images/Visa.jpg'), name: 'Ivan Djuricic', email: 'idjuricic@gmail.com', age: 21},
+    {imgSource: require('./images/logo192.png'), name: 'Marko Djuricic', email: 'markodjuricic@gmail.com', age: 20},
+    {imgSource: require('./images/logo192.png'), name: 'Marko Djuricic', email: 'markodjuricic@gmail.com', age: 20},{imgSource: require('./images/logo192.png'), name: 'Marko Djuricic', email: 'markodjuricic@gmail.com', age: 20}
+  ]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header title={'Contact List'}/>
+      <main>
+        {contacts.map((contact)=>(
+          <ContactCard imgSource={contact.imgSource} name={contact.name} email={contact.email} age={contact.age}  />
+        ))}
+      </main>
+      <Footer/>
     </div>
   );
 }
