@@ -1,0 +1,11 @@
+{
+  "contacts": [
+    {
+      "id": 1,
+      "imgSource": "blob:http://localhost:3000/fb685c0b-d13a-4fc5-bf97-62f1bafd8cb5",
+      "name": "Ivan Djuricic",
+      "email": "duricicsolutions@gmail.com",
+      "age": "21"
+    }
+  ]
+}

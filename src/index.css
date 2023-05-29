@@ -94,3 +94,46 @@ img{
 label{
   text-align: left;
 }
+form{
+  display: grid;
+  grid-template-columns: 25% 20% 20% 20% 15%;
+  grid-template-rows: auto auto;
+  margin: 10px;
+  align-items: center;
+  justify-content: center;
+}
+input{
+ margin: 5px;
+ font: inherit;
+ font-size: 0.5em;
+}
+.inputLabel{
+  text-align: center;
+}
+
+.inputBtn{
+  font-size: 0.5em;
+  width: fit-content;
+  padding: 5px;
+  margin-bottom: 10px;
+  grid-column: 5;
+  grid-row: 1 / span 2;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+.inputBtn:hover{
+  color: #CB9CF2;
+}
+.Trash{
+  margin: auto;
+  width: 30%;
+  height: 100%;
+} 
+.Trash:hover{
+  color: #9E7B9B;
+}
+
+.plus{
+  margin: auto;
+}
