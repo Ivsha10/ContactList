@@ -2,29 +2,75 @@ import './index.css';
 import Header from './Header';
 import Footer from './Footer';
 import ContactCard from './ContactCard';
-import { useState } from 'react';
+import NewContact from './NewContact';
+import { useEffect, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
 function App() {
-  const [contacts, setContact] = useState([
-    {imgSource: require('./images/Visa.jpg'), name: 'Ivan Djuricic', email: 'idjuricic@gmail.com', age: 21},
-    {imgSource: require('./images/logo192.png'), name: 'Marko Djuricic', email: 'markodjuricic@gmail.com', age: 20},
-    {imgSource: require('./images/logo192.png'), name: 'Marko Djuricic', email: 'markodjuricic@gmail.com', age: 20},{imgSource: require('./images/logo192.png'), name: 'Marko Djuricic', email: 'markodjuricic@gmail.com', age: 20}
 
-
-  ]);
-
+  const [contacts, setContacts] = useState([]);
+  const url = 'http://localhost:3500/contacts';
   const [windowSize, setWindowSize] = useState();
-  window.addEventListener('resize',()=>{
-    setWindowSize(window.outerWidth);
+  const [isShown, setIsShown] = useState(false);
+  window.addEventListener('resize', () => {
+    setWindowSize(window.innerWidth);
   })
+
+
+  const handleDelete = (id) => {
+    let updatedContacts = []
+    updatedContacts = contacts.filter((contact) => (
+      contact.id !== id ? [...updatedContacts, contact] : null
+    ))
+
+    setContacts(updatedContacts);
+
+    const deleteItem = async () => {
+      try {
+        fetch(`${url}/${id}`, { method: 'DELETE' });
+      }
+      catch (err) {
+        console.log(err);
+      }
+
+    }
+    deleteItem();
+
+  }
+
+  const fetchItems = async () => {
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setContacts(data);
+
+    }
+    catch (err) {
+      console.log(err);
+    }
+
+  }
+  useEffect(() => {
+
+    fetchItems();
+  }, [])
   return (
-    <div className="App" style={{width: `${windowSize*.7}px`, minWidth:'450px', maxWidth:`500px`}}>
-      <Header title={'Contact List'}/>
+    <div className="App" style={{ width: `${windowSize * .7}px`, minWidth: '450px', maxWidth: `500px` }}>
+      <Header title={'Contact List'} />
+
+
       <main>
-        {contacts.map((contact)=>(
-          <ContactCard key={contacts.indexOf(contact)} imgSource={contact.imgSource} name={contact.name} email={contact.email} age={contact.age}  />
-        ))}
+        <input type='text' placeholder='Search Contact' /> <FaPlus role='button' onClick={() => setIsShown(!isShown)} className='plus' />
+        {isShown &&
+          <NewContact contacts={contacts} setContacts={setContacts} />
+        }
+        {contacts.length > 0 ?
+          contacts.map((contact) => (
+            <ContactCard key={contacts.indexOf(contact)} contact={contact} contacts={contacts} imgSource={contact.imgSource} name={contact.name} email={contact.email} age={contact.age} handleDelete={handleDelete} />
+          )) : <p>No Contacts To Display.</p>}
       </main>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }
